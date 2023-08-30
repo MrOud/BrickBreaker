@@ -7,16 +7,16 @@ export default function World()
     return <>
         <color args={['#3C7EF0']} attach="background" />
         <OrbitControls />
-        <Physics>
+        <Physics debug>
             <RigidBody type='fixed'>
                 <mesh>
-                    <boxGeometry args={[20, 0.5, 20]} />
+                    <boxGeometry args={[80, 0.5, 20]} />
                     <meshStandardMaterial color={'green'} />
                 </mesh>
             </RigidBody>
             <RigidBody>
                 <mesh position={[0, 20, 0]}>
-                    <boxGeometry args={[3, 3, 3]} />
+                    <boxGeometry args={[6, 2, 3]} />
                     <meshStandardMaterial color={'blue'} />
                 </mesh>
             </RigidBody>
