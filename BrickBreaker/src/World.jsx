@@ -1,6 +1,7 @@
 import { Physics, RigidBody } from '@react-three/rapier'
 import { OrbitControls } from '@react-three/drei'
 import Lights from './Lights.jsx'
+import Player from './Player.jsx'
 
 export default function World()
 {
@@ -10,16 +11,11 @@ export default function World()
         <Physics debug>
             <RigidBody type='fixed'>
                 <mesh>
-                    <boxGeometry args={[80, 0.5, 20]} />
+                    <boxGeometry args={[80, 0.5, 3]} />
                     <meshStandardMaterial color={'green'} />
                 </mesh>
             </RigidBody>
-            <RigidBody>
-                <mesh position={[0, 20, 0]}>
-                    <boxGeometry args={[6, 2, 3]} />
-                    <meshStandardMaterial color={'blue'} />
-                </mesh>
-            </RigidBody>
+            <Player />
             <Lights />
         </Physics>
     </>
