@@ -48,7 +48,12 @@ export default function Player()
     })
 
     return <>
-        <RigidBody ref={ body } canSleep={ false }>
+        <RigidBody ref={ body }
+            name={'player'}
+            canSleep={ false }
+            linearDamping={ 1.0 }
+            lockRotations={ true }
+        >
             <mesh position={[0, 1.5, 0]}>
                     <boxGeometry args={[6, 2, 3]} />
                     <meshStandardMaterial color={'blue'} />
