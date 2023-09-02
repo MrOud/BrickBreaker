@@ -20,7 +20,7 @@ export default function Player()
 
     const pressSpace = () =>
     {
-        console.log(body.current)
+        //console.log(body.current)
     }
     
     useEffect(() => 
