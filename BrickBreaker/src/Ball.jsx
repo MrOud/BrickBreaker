@@ -68,17 +68,7 @@ export default function Ball()
 
     const flipAngleY = () =>
     {
-        if (bounceAngleState == 1) {
-            bounceAngleState = -1
-        } else if (bounceAngleState == 2) {
-            bounceAngleState = -2
-        } else if (bounceAngleState == 3) {
-            bounceAngleState = -3
-        }else if (bounceAngleState == 4) {
-            bounceAngleState = -4
-        } else if (bounceAngleState == 5) {
-            bounceAngleState = -5
-        }
+       bounceAngleState *= -1
 
         bounceAngle = getAngleFromBounceAngleState()
     }
@@ -96,6 +86,10 @@ export default function Ball()
             //Find point of contact between player and ball
             const xHitpoint = event.colliderObject.parent.position.x - ball.current.translation().x
             calcAngleOnPlayerHit(xHitpoint + 4)
+        } else if (name === 'brick') {
+            flipAngleY()
+        } else if (name === 'brickSide') {
+            flipAngleX()
         }
         ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
         
@@ -103,6 +97,7 @@ export default function Ball()
 
     return <>
         <RigidBody ref={ ball }
+            name="ball"
             type="dynamic"
             gravityScale={0}
             canSleep = { false}

@@ -19,6 +19,11 @@ export default function LevelBounds()
                 args={[42, 1, 3]} 
                 position={[0, 41, 0]}
             />
+
+            <mesh>
+                <boxGeometry args={[80, 0.5, 3]} />
+                <meshStandardMaterial color={'green'} />
+            </mesh>
         </RigidBody>
     </>
 }
