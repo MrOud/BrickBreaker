@@ -10,8 +10,9 @@ import Brick from './Brick.jsx'
 export default function World()
 {
     const { camera } = useThree()
-    camera.position.copy(new THREE.Vector3(0, 75, 75))
-    camera.lookAt(new THREE.Vector3(0, 40, 0))
+    camera.position.copy(new THREE.Vector3(5, 50, 70))
+    camera.zoom = 10
+    camera.lookAt(new THREE.Vector3(0, 35, 0))
 
     return <>
         <color args={['#3C7EF0']} attach="background" />
