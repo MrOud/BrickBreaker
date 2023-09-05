@@ -3,7 +3,7 @@ import { RigidBody } from "@react-three/rapier"
 import { useKeyboardControls } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 
-export default function Player()
+export default function Player({startingX = 0})
 {
     const body = useRef()
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
@@ -54,7 +54,7 @@ export default function Player()
             linearDamping={ 1.0 }
             lockRotations={ true }
         >
-            <mesh position={[0, 1.5, 0]}>
+            <mesh position={[startingX, 1.5, 0]}>
                     <boxGeometry args={[6, 2, 3]} />
                     <meshStandardMaterial color={'blue'} />
                 </mesh>

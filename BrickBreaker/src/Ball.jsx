@@ -5,12 +5,13 @@ export default function Ball()
 {
     const ball = useRef()
     let forceScalar = 15
-    let bounceAngle = Math.PI / 3
-    let bounceAngleState = 2
+    let bounceAngleState = 3
+    let bounceAngle = (Math.PI) / 2
+    
 
     useEffect(() => 
     {
-        ball.current.setLinvel({x: forceScalar, y: forceScalar, z: 0})
+        ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
     }, [])
 
     const getAngleFromBounceAngleState = () =>
@@ -90,6 +91,8 @@ export default function Ball()
             flipAngleY()
         } else if (name === 'brickSide') {
             flipAngleX()
+        } else if (name === 'ground') {
+            console.log('ya ded!')
         }
         ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
         

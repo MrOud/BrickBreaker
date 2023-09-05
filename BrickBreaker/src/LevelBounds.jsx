@@ -1,29 +1,32 @@
 import { CuboidCollider, RigidBody } from "@react-three/rapier"
 
-export default function LevelBounds()
+export default function LevelBounds({width=90, height=60})
 {
     return <>
         <RigidBody type="fixed">
             {/* Left and right bounds */}
             <CuboidCollider name="rightWall"
-                args={[1, 20, 3]} 
-                position={[41, 20, 0]}
+                args={[1, height / 2, 3]} 
+                position={[(width / 2) + 1, height / 2, 0]}
             />
             <CuboidCollider name="leftWall"
-                args={[1, 20, 3]} 
-                position={[-41, 20, 0]}
+                args={[1, height / 2, 3]} 
+                position={[-(width / 2) - 1, height / 2, 0]}
             />
 
-            {/* Top Bounds */}
+            {/* Top and bottom Bounds */}
             <CuboidCollider name="topWall"
-                args={[42, 1, 3]} 
-                position={[0, 41, 0]}
+                args={[width / 2 + 2, 1, 3]} 
+                position={[0, height + 1, 0]}
             />
-
-            <mesh>
-                <boxGeometry args={[80, 0.5, 3]} />
-                <meshStandardMaterial color={'green'} />
-            </mesh>
+            <CuboidCollider name="ground"
+                args={[width / 2, 0.125, 3]} 
+                position={[0, 0, 0]}
+            />
         </RigidBody>
+        <mesh>
+            <boxGeometry args={[width, 0.5, 3]} name="ground"/>
+            <meshStandardMaterial color={'green'} />
+        </mesh>
     </>
 }

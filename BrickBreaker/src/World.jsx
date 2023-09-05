@@ -4,8 +4,7 @@ import * as THREE from 'three'
 import Lights from './Lights.jsx'
 import Player from './Player.jsx'
 import Ball from './Ball.jsx'
-import LevelBounds from './LevelBounds.jsx'
-import Brick from './Brick.jsx'
+import LevelManager from './LevelManager.jsx'
 
 export default function World()
 {
@@ -17,13 +16,8 @@ export default function World()
     return <>
         <color args={['#3C7EF0']} attach="background" />
         <Physics debug={false}>
-            <LevelBounds />
+            <LevelManager />
             <Ball />
-            <Brick position={[6, 19, 0]} />
-            <Brick position={[30, 20, 0]} />
-            <Brick position={[-30, 36, 0]} />
-            <Brick position={[6, 35, 0]} />
-            <Brick position={[-12, 15, 0]} />
             <Player />
             <Lights />
         </Physics>
