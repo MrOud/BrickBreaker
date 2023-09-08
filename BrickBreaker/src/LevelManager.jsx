@@ -47,6 +47,7 @@ export default function LevelManager(width=90, height=60, bricks=20, minHits=1, 
             {generateRow(4, [3,4,6,10,12,13])}
             {generateRow(5, [4,6,10,12])}
             {generateRow(6, [5,6,7,9,10,11,12])}
+            {generateRow(7, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])}
         </>
     }
 

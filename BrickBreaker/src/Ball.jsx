@@ -1,18 +1,37 @@
 import { useRef, useEffect } from "react"
 import { RigidBody } from "@react-three/rapier"
+import { useFrame } from "@react-three/fiber"
 
 export default function Ball()
 {
     const ball = useRef()
-    let forceScalar = 15
+    let forceScalar = 25
     let bounceAngleState = 3
     let bounceAngle = (Math.PI) / 2
+    let lastLinVelReset = Date.now()
     
 
     useEffect(() => 
     {
         ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
     }, [])
+
+    useFrame(() =>
+    {
+        //If the ball hits multiple colliders it can stall out or have weird behaviours
+        //This will ensure the linear velocity always comes to a magnitude near the forceScalar
+        if (ball.current) 
+        {
+            const linvel = ball.current.linvel()
+            const linvelMagnitude = Math.floor(Math.abs(linvel.x) + Math.abs(linvel.y))
+
+            if(linvelMagnitude < forceScalar && Date.now() - lastLinVelReset > 50) {
+                flipAngleY()
+                ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
+                lastLinVelReset = Date.now()
+            }
+        }
+    })
 
     const getAngleFromBounceAngleState = () =>
     {
@@ -69,8 +88,7 @@ export default function Ball()
 
     const flipAngleY = () =>
     {
-       bounceAngleState *= -1
-
+        bounceAngleState *= -1
         bounceAngle = getAngleFromBounceAngleState()
     }
 
@@ -95,13 +113,11 @@ export default function Ball()
             console.log('ya ded!')
         }
         ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
-        
     }
 
     return <>
         <RigidBody ref={ ball }
             name="ball"
-            type="dynamic"
             gravityScale={0}
             canSleep = { false}
             colliders="ball"
