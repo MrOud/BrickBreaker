@@ -1,9 +1,9 @@
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect } from "react"
 import { RigidBody } from "@react-three/rapier"
-import { addEffect, useFrame } from "@react-three/fiber"
-import useGame from "./useGame"
+import { useFrame } from "@react-three/fiber"
 
-export default function Ball()
+
+export default function Ball({seed=0})
 {
     const ball = useRef()
     let forceScalar = 25
@@ -14,27 +14,18 @@ export default function Ball()
     useEffect(() => 
     {
         ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
-        // const unsubscribePhase = addEffect(() => 
-        // {
-        //     const state = useGame.getState()
-
-        //     if (state.phase == 'playing' && state.isBallReady) {
-        //         state.toggleBallReady()
-        //     }
-
-        //     if (state.phase == 'levelSetup' && !state.isBallReady) {
-        //         console.log('ball in setup')
-        //         ball.current.setTranslation({x: 0, y: 10, z: 0}, true)
-        //         state.toggleBallReady()
-                
-        //     }
-
-        //     return () => 
-        //     {
-        //         unsubscribePhase()
-        //     }
-        // })
     }, [])
+
+    useEffect(() => 
+    {
+        if (ball.current) 
+        {
+            ball.current.setTranslation({x: 0, y: 10, z: 0})
+            let bounceAngleState = 3
+            let bounceAngle = (Math.PI) / 2
+            let lastLinVelReset = Date.now()
+        }
+    }, [seed])
 
     useFrame(() =>
     {

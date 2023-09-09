@@ -3,7 +3,7 @@ import { RigidBody } from "@react-three/rapier"
 import { useKeyboardControls } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 
-export default function Player({startingX = 0})
+export default function Player({startingX = 0, seed=0})
 {
     const body = useRef()
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
@@ -38,6 +38,14 @@ export default function Player({startingX = 0})
             unsubscribeSpace()
         }
     }, [])
+
+    useEffect(() =>
+    {
+        if (body.current)
+        {
+            body.current.setTranslation({x: startingX, y: 1.5, z: 0})
+        }
+    }, [seed])
 
     useFrame((state, delta) =>
     {

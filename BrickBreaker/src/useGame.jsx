@@ -48,18 +48,37 @@ export default create(subscribeWithSelector((set) =>
         {
             set((state) =>
             {
-                if (state.phase == 'levelSetup') {
+                if (state.phase == 'levelSetup' && state.currentLevel != state.maxLevel) {
                     return {phase: 'playing'}
+                }
+                if (state.phase == 'levelSetup' && state.currentLevel == state.maxLevel) {
+                    return {phase: 'victory'}
                 }
                 return {}
             })
         },
 
-        currentLevel: 0,
-
-        increaseCurrentLevel: () =>
+        getSeedValue: () =>
         {
-            set((state) => { return {currentLevel: state.currentLevel + 1}})
+            return Math.random()
+        },
+
+        currentLevel: 0,
+        incCurrentLevel: () =>
+        {
+            set((state) =>
+            {
+                return { currentLevel: state.currentLevel + 1 }
+            })
+        },
+
+        maxLevel: 4,
+        setMaxLevel: (value) =>
+        {
+            set((state) =>
+            {
+                return {maxLevel: value }
+            })
         }
     }
 }))
