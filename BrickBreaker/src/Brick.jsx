@@ -1,11 +1,21 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { CuboidCollider, RigidBody } from "@react-three/rapier"
+import useGame from './useGame'
 
 export default function Brick({ hits=2, color='yellowgreen', args=[6, 2, 3], position=[0, 0, 0]})
 {
     const brick = useRef()
     const [ isActive, setIsActive ] = useState(true)
     const [ hitPoints, setHitPoints ] = useState(hits)
+    let alreadyDecremented = false
+
+    const incrementBricks = useGame((state) => { return state.incrementBricks})
+    const decrementBricks = useGame((state) => { return state.decrementBricks})
+
+    useEffect(() => 
+    {
+        incrementBricks()
+    }, [])
 
     const hitBrick = (event) => 
     {
@@ -13,8 +23,14 @@ export default function Brick({ hits=2, color='yellowgreen', args=[6, 2, 3], pos
         if (name === 'ball') {
             if (hitPoints == 1) {
                 setIsActive(false)
+                if (!alreadyDecremented) {
+                    decrementBricks()
+                    alreadyDecremented = true
+                }
+                
             } else {
                 setHitPoints(hitPoints - 1)
+                
             }
         }
     }
@@ -39,13 +55,13 @@ export default function Brick({ hits=2, color='yellowgreen', args=[6, 2, 3], pos
         {/* Side Colliders */}
         <CuboidCollider
                 name='brickSide'
-                args={[0.1, (args[1] / 2) - 0.2, (args[2] / 2) - 0.1]} 
+                args={[0.1, (args[1] / 2) - 0.2, (args[2] / 2) - 0.2]} 
                 position={[position[0] + (args[0] / 2), position[1], position[2]]}
                 onCollisionEnter={ (event) => hitBrick(event) }
             />
         <CuboidCollider
             name='brickSide'
-            args={[0.1, (args[1] / 2) - 0.2, (args[2] / 2) - 0.1]} 
+            args={[0.1, (args[1] / 2) - 0.2, (args[2] / 2) - 0.2]} 
             position={[position[0] - (args[0] / 2), position[1], position[2]]}
             onCollisionEnter={ (event) => hitBrick(event) }
         />

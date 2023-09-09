@@ -15,10 +15,8 @@ export default function World()
 
     return <>
         <color args={['#3C7EF0']} attach="background" />
-        <Physics debug={false}>
+        <Physics debug={true}>
             <LevelManager />
-            <Ball />
-            <Player />
             <Lights />
         </Physics>
     </>

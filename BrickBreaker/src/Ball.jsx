@@ -1,6 +1,7 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { RigidBody } from "@react-three/rapier"
-import { useFrame } from "@react-three/fiber"
+import { addEffect, useFrame } from "@react-three/fiber"
+import useGame from "./useGame"
 
 export default function Ball()
 {
@@ -9,11 +10,30 @@ export default function Ball()
     let bounceAngleState = 3
     let bounceAngle = (Math.PI) / 2
     let lastLinVelReset = Date.now()
-    
 
     useEffect(() => 
     {
         ball.current.setLinvel({x: Math.cos(bounceAngle) * forceScalar, y: Math.sin(bounceAngle) * forceScalar, z: 0})
+        // const unsubscribePhase = addEffect(() => 
+        // {
+        //     const state = useGame.getState()
+
+        //     if (state.phase == 'playing' && state.isBallReady) {
+        //         state.toggleBallReady()
+        //     }
+
+        //     if (state.phase == 'levelSetup' && !state.isBallReady) {
+        //         console.log('ball in setup')
+        //         ball.current.setTranslation({x: 0, y: 10, z: 0}, true)
+        //         state.toggleBallReady()
+                
+        //     }
+
+        //     return () => 
+        //     {
+        //         unsubscribePhase()
+        //     }
+        // })
     }, [])
 
     useFrame(() =>
@@ -94,7 +114,6 @@ export default function Ball()
 
     const hitObject = (event) =>
     {
-        ball.current.setLinvel({x: 0, y: 0, z: 0})
         const name = event.colliderObject.name
         if (name === 'topWall') 
         {
